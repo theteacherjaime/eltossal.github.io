@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="theme-color" content="#1e40af">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Formularios">
+        <title>Formularios Docentes</title>
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <style>:root { --primario: #1e40af; --primario-osc: #1e3a8a; --acento: #3b82f6; --fondo: #f1f5f9; --tarjeta: #ffffff; --texto: #0f172a; --sub: #64748b; } * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; } html { scroll-behavior: smooth; } body { font-family: -apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; background: linear-gradient(160deg,var(--primario) 0%,var(--acento) 55%,#60a5fa 100%); background-attachment: fixed; min-height: 100vh; color: var(--texto); padding: 0 16px calc(24px + env(safe-area-inset-bottom)); } header { text-align: center; padding: 40px 12px 24px; color: #fff; } header .logo { font-size: 52px; line-height: 1; } header h1 { font-size: 1.55rem; font-weight: 800; margin-top: 10px; letter-spacing: .3px; } header p { opacity: .9; font-size: .95rem; margin-top: 6px; } #installBtn { display: none; margin: 0 auto 18px; border: none; cursor: pointer; background: #fff; color: var(--primario); font-weight: 700; font-size: .95rem; padding: 12px 22px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,.25); } #installBtn:active { transform: scale(.96); } .grid { display: grid; gap: 14px; max-width: 560px; margin: 0 auto; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); } .btn-tarjeta { background: var(--tarjeta); border-radius: 18px; padding: 20px 14px 16px; text-align: center; text-decoration: none; color: var(--texto); box-shadow: 0 6px 18px rgba(2,6,23,.18); display: flex; flex-direction: column; align-items: center; gap: 10px; transition: transform .12s ease; position: relative; cursor: pointer; user-select: none; } .btn-tarjeta:active { transform: scale(.95); } .btn-tarjeta .icono { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #fff; } .btn-tarjeta .titulo { font-weight: 700; font-size: .98rem; line-height: 1.25; } .btn-tarjeta .sub { font-size: .78rem; color: var(--sub); } .btn-tarjeta .editar { position: absolute; top: 6px; right: 8px; font-size: .75rem; color: var(--sub); background: #e2e8f0; border-radius: 8px; padding: 2px 7px; display: none; } body.modo-edicion .editar { display: block; } footer { max-width: 560px; margin: 26px auto 0; text-align: center; } #adminToggle { background: rgba(255,255,255,.18); color: #fff; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; padding: 10px 20px; font-size: .88rem; cursor: pointer; backdrop-filter: blur(4px); } /* Panel de edición */#panelEdicion { display: none; position: fixed; inset: 0; background: rgba(2,6,23,.55); z-index: 50; align-items: flex-end; justify-content: center; } #panelEdicion.abierto { display: flex; } .hoja { background: #fff; width: 100%; max-width: 520px; border-radius: 22px 22px 0 0; padding: 22px 20px calc(20px + env(safe-area-inset-bottom)); max-height: 88vh; overflow-y: auto; } .hoja h2 { font-size: 1.15rem; margin-bottom: 14px; } .hoja label { display: block; font-size: .82rem; font-weight: 600; color: var(--sub); margin: 10px 0 4px; } .hoja input, .hoja select { width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 1rem; outline: none; } .hoja input:focus { border-color: var(--acento); } .fila-botones { display: flex; gap: 10px; margin-top: 18px; } .fila-botones button { flex: 1; border: none; border-radius: 12px; padding: 13px; font-size: .95rem; font-weight: 700; cursor: pointer; } #guardarBtn { background: var(--primario); color: #fff; } #borrarBtn { background: #fee2e2; color: #b91c1c; } #cancelarBtn { background: #e2e8f0; color: var(--texto); } /* ============ LOGIN ============ */#login { position: fixed; inset: 0; z-index: 100; background: linear-gradient(160deg,var(--primario) 0%,var(--acento) 55%,#60a5fa 100%); display: flex; align-items: center; justify-content: center; padding: 20px; } #login.oculto { display: none; } .login-caja { background: #fff; border-radius: 22px; padding: 32px 26px; width: 100%; max-width: 380px; box-shadow: 0 10px 40px rgba(2,6,23,.35); text-align: center; } .login-caja .logo { font-size: 48px; } .login-caja h2 { font-size: 1.25rem; margin: 8px 0 4px; } .login-caja p.sub { font-size: .85rem; color: var(--sub); margin-bottom: 18px; } .login-caja input { width: 100%; padding: 13px 14px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 1rem; outline: none; text-align: center; letter-spacing: 2px; } .login-caja input:focus { border-color: var(--acento); } .login-caja input.err { border-color: #ef4444; animation: sacudida .3s; } @keyframes sacudida{ 0%, 100% {  transform: translateX(0); }  25% {  transform: translateX(-6px); }  75% {  transform: translateX(6px); } } #loginError { color: #dc2626; font-size: .82rem; margin-top: 10px; min-height: 1.2em; } #entrarBtn { width: 100%; margin-top: 14px; border: none; border-radius: 12px; padding: 14px; background: var(--primario); color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; } #entrarBtn:active { transform: scale(.97); } .login-info { font-size: .72rem; color: var(--sub); margin-top: 14px; } .nota { font-size: .78rem; color: var(--sub); margin-top: 14px; line-height: 1.5; }</style>
+    </head>
+    <body>
+        <!-- ============ PANTALLA DE ACCESO ============ -->
+        <div id="login">
+            <div class="login-caja">
+                <div class="logo">🔒🎓</div>
+                <h2>Docentes Tossal</h2>
+                <p class="sub">Introduce la contraseña para continuar</p>
+                <input type="password" id="passInput" placeholder="••••••••" autocomplete="current-password">
+                <div id="loginError"></div>
+                <button id="entrarBtn">Acceder</button>
+                <p class="login-info"><br></p>
+            </div>
+        </div>
+        <header>
+            <div class="logo">🎓</div>
+            <h1>Docentes Tossal</h1>
+            <p>Acceso rápido a formularios y recursos</p>
+        </header>
+        <button id="installBtn">📲 Instalar aplicación</button>
+        <main class="grid" id="contenedor"></main>
+        <footer>
+           <button id="adminToggle">✏️ Modo edición</button>
+        </footer>
+        <!-- Panel de edición -->
+        <div id="panelEdicion">
+            <div class="hoja">
+                <h2 id="tituloPanel">Editar botón</h2>
+                <input type="hidden" id="campoId">
+                <label for="campoTitulo">Nombre del botón</label>
+                <input id="campoTitulo" placeholder="Ej: Registro de faltas" maxlength="40">
+                <label for="campoUrl">Enlace (URL del formulario o web)</label>
+                <input id="campoUrl" placeholder="https://forms.google.com/..." inputmode="url">
+                <label for="campoIcono">Icono</label>
+                <select id="campoIcono">
+                    <option>📝</option>
+                    <option>📋</option>
+                    <option>📅</option>
+                    <option>📚</option>
+                    <option>🧑‍🎓</option>
+                    <option>📊</option>
+                    <option>⏰</option>
+                    <option>💬</option>
+                    <option>🗂️</option>
+                    <option>✅</option>
+                    <option>📷</option>
+                    <option>🔔</option>
+                    <option>🚌</option>
+                    <option>🍎</option>
+                    <option>🏫</option>
+                    <option>📩</option>
+                </select>
+                <div class="fila-botones">
+                    <button id="guardarBtn">💾 Guardar</button>
+                    <button id="borrarBtn">🗑️ Borrar</button>
+                    <button id="cancelarBtn">Cancelar</button>
+                </div>
+                <p class="nota">Los botones se guardan en este dispositivo. Para crear un botón nuevo, activa el modo edición y pulsa el botón <b>+ Añadir</b> que aparecerá al final.</p>
+            </div>
+        </div>
+        <script>
+/* ============ DATOS ============ */
+const CLAVE = 'botonesDocentes_v1';
+const COLORES = ['#ef4444','#f97316','#eab308','#22c55e','#14b8a6','#3b82f6','#8b5cf6','#ec4899','#0ea5e9','#f43f5e'];
+
+const PREDETERMINADOS = [
+  {id:1, titulo:'Registro de conducta',  url:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=FBHdc33vx0CGaVadMufim8bX8FXnOx1Nl6MQ4RzpBRRUQ1JFNDZZSEpZUThIUk1BUTFWSDIwTzM4RCQlQCN0PWcu', icono:'📝'},
+  {id:2, titulo:'Horarios',  url:'https://gvaedu.sharepoint.com/:x:/r/sites/Section_03009749-C/Documentos%20compartidos/General/-%20Curso%2026-27/%C2%AC%20Horarios%2026-27/HORARIO%20TUTOR%C3%8DAS%2026-27.xlsx?d=w3fa2915a362f40fd9ad82b0895719b43&csf=1&web=1&e=knXqVY', icono:'📋'},
+  {id:3, titulo:'Calendario',    url:'https://outlook.cloud.microsoft/calendar/view/month', icono:'📅'},
+  {id:4, titulo:'OneDrive',  url:'https://gvaedu.sharepoint.com/:f:/r/sites/Section_03009749-C/Documentos%20compartidos/General?d=w7b038a7b0bca4419a1ffe692bfa33544&csf=1&web=1&e=UVJJok', icono:'🗂️'},
+  {id:5, titulo:'Canva', url:'https://www.canva.com/folder/FAFx6bKMyEQ', icono:'📚'},
+  {id:6, titulo:'Personal', url:'https://portal.edu.gva.es/eltossal/va/personal/', icono:'🧑‍🎓'},
+];
+
+function cargarBotones(){
+  try{
+    const d = JSON.parse(localStorage.getItem(CLAVE));
+    if(Array.isArray(d)) return d;
+  }catch(e){}
+  return PREDETERMINADOS.slice();
+}
+function guardarBotones(b){ localStorage.setItem(CLAVE, JSON.stringify(b)); }
+let botones = cargarBotones();
+
+/* ============ RENDER ============ */
+const contenedor = document.getElementById('contenedor');
+function render(){
+  contenedor.innerHTML = '';
+  botones.forEach((b,i)=>{
+    const a = document.createElement('a');
+    a.className = 'btn-tarjeta';
+    a.href = b.url; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = `
+      <span class="editar">✏️ editar</span>
+      <span class="icono" style="background:${COLORES[i % COLORES.length]}">${b.icono}</span>
+      <span class="titulo">${escapar(b.titulo)}</span>`;
+    a.addEventListener('click', e=>{
+      if(document.body.classList.contains('modo-edicion')){
+        e.preventDefault();
+        abrirPanel(b.id);
+      }
+    });
+    contenedor.appendChild(a);
+  });
+  if(document.body.classList.contains('modo-edicion')){
+    const add = document.createElement('button');
+    add.className = 'btn-tarjeta';
+    add.innerHTML = `<span class="icono" style="background:#94a3b8">➕</span><span class="titulo">Añadir botón</span>`;
+    add.addEventListener('click', ()=>abrirPanel(null));
+    contenedor.appendChild(add);
+  }
+}
+function escapar(t){ return String(t).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ============ PANEL ============ */
+const panel = document.getElementById('panelEdicion');
+function abrirPanel(id){
+  document.getElementById('tituloPanel').textContent = id ? 'Editar botón' : 'Nuevo botón';
+  document.getElementById('campoId').value = id ?? '';
+  const b = id ? botones.find(x=>x.id===id) : {titulo:'',url:'',icono:'📝'};
+  document.getElementById('campoTitulo').value = b.titulo;
+  document.getElementById('campoUrl').value = b.url;
+  document.getElementById('campoIcono').value = b.icono;
+  panel.classList.add('abierto');
+}
+function cerrarPanel(){ panel.classList.remove('abierto'); }
+document.getElementById('cancelarBtn').addEventListener('click', cerrarPanel);
+panel.addEventListener('click', e=>{ if(e.target===panel) cerrarPanel(); });
+
+document.getElementById('guardarBtn').addEventListener('click', ()=>{
+  const titulo = document.getElementById('campoTitulo').value.trim();
+  let url = document.getElementById('campoUrl').value.trim();
+  const icono = document.getElementById('campoIcono').value;
+  if(!titulo || !url){ alert('Completa el nombre y el enlace.'); return; }
+  if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  const id = document.getElementById('campoId').value;
+  if(id){
+    const b = botones.find(x=>x.id==id);
+    Object.assign(b,{titulo,url,icono});
+  }else{
+    botones.push({id:Date.now(), titulo, url, icono});
+  }
+  guardarBotones(botones); render(); cerrarPanel();
+});
+
+document.getElementById('borrarBtn').addEventListener('click', ()=>{
+  const id = document.getElementById('campoId').value;
+  if(!id) return;
+  if(confirm('¿Eliminar este botón?')){
+    botones = botones.filter(b=>b.id!=id);
+    guardarBotones(botones); render(); cerrarPanel();
+  }
+});
+
+/* ============ MODO EDICIÓN ============ */
+const adminToggle = document.getElementById('adminToggle');
+adminToggle.addEventListener('click', ()=>{
+  document.body.classList.toggle('modo-edicion');
+  const on = document.body.classList.contains('modo-edicion');
+  adminToggle.textContent = on ? '✅ Listo' : '✏️ Modo edición';
+  render();
+});
+
+/* ============ PWA ============ */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'block';
+});
+document.getElementById('installBtn').addEventListener('click', async ()=>{
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('installBtn').style.display = 'none';
+});
+
+
+/* ============ ACCESO ============ */
+const CLAVE_ACCESO = 'tic2026';            // <-- CAMBIA AQUÍ LA CONTRASEÑA
+const SESION = 'accesoDocentes';
+const loginDiv = document.getElementById('login');
+const passInput = document.getElementById('passInput');
+const loginError = document.getElementById('loginError');
+
+function ocultarApp(){ document.querySelectorAll('header, main, footer, #installBtn').forEach(e => e.style.visibility = 'hidden'); }
+function mostrarApp(){ document.querySelectorAll('header, main, footer, #installBtn').forEach(e => e.style.visibility = ''); }
+
+function autenticar(){
+  if(sessionStorage.getItem(SESION) === 'ok'){ loginDiv.classList.add('oculto'); mostrarApp(); return; }
+  ocultarApp();
+  passInput.focus();
+}
+function intentar(){
+  if(passInput.value === CLAVE_ACCESO){
+    sessionStorage.setItem(SESION, 'ok');
+    loginDiv.classList.add('oculto');
+    mostrarApp();
+  }else{
+    loginError.textContent = 'Contraseña incorrecta, inténtalo de nuevo.';
+    passInput.classList.add('err');
+    setTimeout(()=>passInput.classList.remove('err'), 400);
+    passInput.value = ''; passInput.focus();
+  }
+}
+document.getElementById('entrarBtn').addEventListener('click', intentar);
+passInput.addEventListener('keydown', e => { if(e.key === 'Enter') intentar(); });
+autenticar();
+
+render();
+</script>
+    </body>
+</html>
